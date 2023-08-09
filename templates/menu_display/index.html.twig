@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Menu{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        
+        .menu-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: solid 1px black;
+        }
+
+        .menu-card:hover {
+            transform: scale(1.02);
+        }
+
+        .menu-header {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+        }
+
+        .menu-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.3s;
+            color: #333;
+            
+        }
+
+        .menu-item:hover {
+            background-color: #f8f8f8;
+        }
+
+        .menu-item-details {
+            flex-grow: 1;
+        }
+
+        .menu-item-details h5 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .menu-item-description {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .menu-item-price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+         .formula-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none; 
+        }
+
+        .formula-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.3s;
+        }
+
+        .animate-slide {
+            animation: slide-in 2s ease-in-out;
+        }
+
+        @keyframes slide-in {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        
+        @media screen and (max-width: 768px) {
+            .menu-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+    <script>
+       
+        function toggleFormulas(menuId) {
+            var formulaList = document.getElementById('formula-list-' + menuId);
+            formulaList.style.display = formulaList.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    {% include "partials/nav.html.twig" %}
+    
+    <div class="container">
+        <h1 class="text-center my-4 animate-slide fw-bold text-center text-body-emphasis">Découvrez notre Menu</h1>
+        
+        <div class="row">
+            {% for menu in menus %}
+                <div class="col-md-6 mb-4">
+                    <div class="menu-card">
+                        <div class="menu-header">
+                            <h2 class="btn btn-outline-dark fw-bold text-center " onclick="toggleFormulas('{{ menu.id }}')">{{ menu.titre }}</h2>
+                            
+                        </div>
+                        <div class="menu-body">
+                         
+                            <ul class="formula-list" id="formula-list-{{ menu.id }}">
+
+                                {% for formula in menu.formulas %}
+                                    <li class="menu-item">
+                                        <div class="menu-item-details">
+                                            <h5>{{ formula.title }}</h5>
+                                            <p class="menu-item-description">{{ formula.descri|raw }}</p>
+                                        </div>
+                                        <div class="menu-item-price">
+                                            {{ formula.price }} $
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

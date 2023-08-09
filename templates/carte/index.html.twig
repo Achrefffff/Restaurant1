@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            transition: transform 0.3s;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        .dish-info {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            
+            border-left: solid 1px black;
+
+        }
+
+        .dish-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color:black ;
+        }
+
+        .dish-description {
+            margin-bottom: 10px;
+        }
+
+        .dish-price {
+            font-size: 16px;
+            
+        }
+        
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include "partials/nav.html.twig" %}
+    <br>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-4 mb-4 ">
+                <div class="image-container">
+                    <img
+                        src="{{ asset('images/plata.jpg') }}"
+                        alt="Plata"
+                        class="w-100 shadow rounded"
+                    />
+                    <div class="dish-info">
+                        <div class="dish-title">{{ categories[0].getName() }}</div>
+                        {% for dish in categories[0].getDishes() %}
+                          <h6>{{ dish.getTitle() }}</h6>
+                          <ul>
+                            <li class="dish-description">{{ dish.getDescription()|raw }}</li>
+                            <li class="dish-price">Prix : {{ dish.getPrix() }} $</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4 ">
+                <div class="image-container">
+                    <img
+                        src="{{ asset('images/entre.jpg') }}"
+                        alt="Entre"
+                        class="w-100 shadow rounded"
+                    />
+                    <div class="dish-info">
+                        <div class="dish-title">{{ categories[1].getName() }}</div>
+                        {% for dish in categories[1].getDishes() %}
+                          <h6>{{ dish.getTitle() }}</h6>
+                          <ul>
+                            <li class="dish-description">{{ dish.getDescription()|raw }}</li>
+                            <li class="dish-price">Prix : {{ dish.getPrix() }} $</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4 ">
+                <div class="image-container">
+                    <img
+                        src="{{ asset('images/dessert.jpg') }}"
+                        alt="Dessert"
+                        class="w-100 shadow rounded"
+                    />
+                    <div class="dish-info">
+                        <div class="dish-title">{{ categories[2].getName() }}</div>
+                        {% for dish in categories[2].getDishes() %}
+                          <h6>{{ dish.getTitle() }}</h6>
+                          <ul>
+                            <li class="dish-description">{{ dish.getDescription()|raw }}</li>
+                            <li class="dish-price">Prix : {{ dish.getPrix() }} $</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "partials/footer.html.twig" %}
+{% endblock %}

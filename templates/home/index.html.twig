@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil !{% endblock %}
+
+{% block body %}
+  {% include "partials/nav.html.twig" %}
+  
+  <header>
+    <style>
+      .tooltip {
+        position: absolute;
+        background-color: red;
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 999;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .image-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Style pour la légende de l'image */
+      .image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px;
+        text-align: center;
+        font-size: 12px;
+      }
+    </style>
+
+    <div class="container my-5">
+      <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+          <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Border hero with cropped image and shadows</h1>
+          <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+          <img class="rounded-lg-3" src="{{ asset('images/isto.jpg') }}" alt="">
+        </div>
+      </div>
+    </div>
+  </header>
+  <h1 class='text-dark fw-bold text-center text-body-emphasis'>Gallery</h1> <br>
+  <section>
+    <div class="row">
+      {% for image in images %}
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+        <div class="image-container">
+          {% if image.imageName %}
+            <img
+              src="{{ vich_uploader_asset(image, 'imageFile') | replace({'http://': 'https://'}) }}"
+              class="w-100 shadow-1-strong rounded mb-4"
+              alt="."
+              data-title="{{ image.titre }}"
+            />
+            <div class="image-caption">{{ image.titre }}</div>
+          {% else %}
+            <p>Image not available</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="d-flex justify-content-center mt-4">
+    <a href="#" class="btn btn-white btn-lg text-dark fw-bold fs-1 text-body-emphasis">Réserver !</a>
+  </div>
+  </br>
+  <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ asset('images/rist1.jpg') }}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ asset('images/rist2.jpg') }}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{{ asset('images/rist3.jpg') }}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.image-container');
+
+      images.forEach(imageContainer => {
+        const image = imageContainer.querySelector('img');
+        const title = image.getAttribute('data-title');
+        const imageCaption = imageContainer.querySelector('.image-caption');
+        imageCaption.innerText = title;
+        imageCaption.style.display = 'none';
+
+        image.addEventListener('mouseover', function() {
+          imageCaption.style.display = 'block';
+        });
+
+        image.addEventListener('mouseout', function() {
+          imageCaption.style.display = 'none';
+        });
+      });
+    });
+  </script>
+{% include "partials/footer.html.twig" %}
+{% endblock %}

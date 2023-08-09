@@ -1,0 +1,16 @@
+<footer class="footer mt-auto py-3 bg-white">
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      {% if horairesOuverture is defined %}
+        <span class="text-dark fw-bold text-body-emphasis">Nos Horaires :</span>
+        <ul>
+          {% for horaireOuverture in horairesOuverture %}
+            <li>{{ horaireOuverture.getJour() }} de {{ horaireOuverture.getOuverture()|date('H:i') }} à {{ horaireOuverture.getFermeture()|date('H:i') }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <span class="text-dark fw-bold text-body-emphasis">Horaires d'ouverture non disponibles</span>
+      {% endif %}
+    </div>
+  </div>
+</footer>
